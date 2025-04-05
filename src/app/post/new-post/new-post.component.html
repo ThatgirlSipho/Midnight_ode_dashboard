@@ -1,0 +1,113 @@
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h3 class="text-theme-primary fw-bold">Add New Post</h3>
+            <p class="mb-4 text-muted">You can add a new post here</p>
+        </div>
+    </div>
+
+    <form action=""  (ngSubmit)="onSubmit()" [formGroup]="postForm">
+        <div class="row g-4">
+            <!-- Left Column -->
+            <div class="col-md-7">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Title</label>
+                            <input type="text" class="form-control" (keyup)="onTitleChanged($event)" formControlName="title" placeholder="Enter post title" [ngClass]="{'is-invalid': fc['title'].touched && fc['title'].invalid}" >
+                            <div *ngIf="fc['title'].errors?.['required']">
+                                <div class="alert alert-danger" *ngIf="fc['title'].touched && fc['title'].invalid">
+                                  Title is required
+                                </div>
+                               
+                              </div>
+                              <div *ngIf="fc['title'].errors?.['minlength']">
+                                <div class="alert alert-danger" *ngIf="fc['title'].touched && fc['title'].invalid">
+                                  Title is too short, must have at least 10 characters long
+                                </div>
+                              </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">PermaLink</label>
+                            <input type="text" class="form-control" [(ngModel)]="permalink" name="permalink" formControlName="permalink"  >
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Excerpt</label>
+                            <textarea class="form-control" rows="5" placeholder="Write a short excerpt..." formControlName="excerpt" [ngClass]="{'is-invalid': fc['excerpt'].touched && fc['excerpt'].invalid}"></textarea>
+                            <div *ngIf="fc['excerpt'].errors?.['required']">
+                                <div class="alert alert-danger" *ngIf="fc['excerpt'].touched && fc['excerpt'].invalid">
+                                  Excerpt is required
+                                </div>
+                              </div>
+                              <div *ngIf="fc['excerpt'].errors?.['minlength']">
+                                <div class="alert alert-danger" *ngIf="fc['excerpt'].touched && fc['excerpt'].invalid">
+                                  Excerpt is too short. Must be at least 15 characters long
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-5">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Post Category</label>
+                            <select class="form-control" formControlName="category" [ngClass]="{'is-invalid': fc['category'].touched && fc['category'].invalid}">
+                                <option value="">Please select a category</option>
+                                <option *ngFor="let cat of categories" value="{{cat.id}}-{{cat.category}}" >{{cat.category}}</option>
+                            </select>
+                            <div *ngIf="fc['category'].errors?.['required']">
+                                <div class="alert alert-danger" *ngIf="fc['category'].touched && fc['category'].invalid">
+                                  Category is required
+                                </div>
+                              </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Post Image</label>
+                            <img [src]="imgSrc" (error)="imgSrc = 'assets/fallback.jpg'" class="form-control img-fluid img-preview" *ngIf="imgSrc" alt="">
+                            <input type="file" class="form-control" accept="image/*" (change)="showPreview($event)" formControlName="postImg" [ngClass]="{'is-invalid': fc['postImg'].touched && fc['postImg'].invalid}">
+                            <div *ngIf="fc['postImg'].errors?.['required']">
+                                <div class="alert alert-danger" *ngIf="fc['postImg'].touched && fc['postImg'].invalid">
+                                  Post Image is required
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Section -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Content</label>
+                         <angular-editor placeholder="Add your content" formControlName="content" [ngClass]="{'is-invalid': fc['content'].touched && fc['content'].invalid}"></angular-editor>
+                         <div *ngIf="fc['content'].errors?.['required']">
+                            <div class="alert alert-danger" *ngIf="fc['content'].touched && fc['content'].invalid" >
+                              Content is required
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="row mt-4">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-info bg-theme px-4 me-3" [disabled]="postForm.invalid">Save Post</button>
+                <button class="btn btn-warning px-4" routerLink="/posts">Go Back</button>
+            </div>
+        </div>
+    </form>
+</div>
