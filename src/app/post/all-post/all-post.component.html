@@ -33,12 +33,14 @@
                             <td width="10">{{i+1}}</td>
                             <td width="200" > <img src="{{post.postImgPath}}" class="img img-fluid" alt=""> </td>
                             <td  width="200">{{post.title}}</td>
-                            <td  width="300">{{post.excerpt}}</td>
+                            <td  width="250">{{post.excerpt}}</td>
                             <td  width="150">{{post.category.category}}</td>
                             <td width="150">{{post.createdAt.toMillis()|date}}</td>
-                            <td [width]="150">
-                                <button class="btn btn-sm btn-warning me-3" routerLink="/posts/new" [queryParams]="{ id: post.id }">Edit</button>
-                                <button class="btn btn-sm btn-danger">Delete</button>
+                            <td [width]="310">
+                                <button class="btn btn-sm btn-warning me-2" routerLink="/posts/new" [queryParams]="{ id: post.id }">Edit</button>
+                                <button class="btn btn-sm btn-danger me-2" (click)="onDelete(post.postImgPath,post.id)">Delete</button>
+                                <button *ngIf="!post.isFeatured" class="btn btn-sm btn-success" (click)="onFeatured(post.id, true)">Mark Featured</button>
+                                <button *ngIf="post.isFeatured" class="btn btn-sm btn-info" (click)="onFeatured(post.id,false)">Remove Feature</button>
                             </td>
                         </tr>
                     </tbody>
