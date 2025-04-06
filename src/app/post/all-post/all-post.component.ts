@@ -24,4 +24,14 @@ ngOnInit(): void {
   } )
  
 }
+onDelete(imgPath:any, id:any){
+this.postService.deleteImage(imgPath,id)
+}
+
+onFeatured(id:any, value:boolean){
+  const featuredData={
+    isFeatured:value
+  }
+  this.postService.markFeatured(id,featuredData)
+}
 }
