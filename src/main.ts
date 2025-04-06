@@ -8,8 +8,9 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations'; 
 import { provideToastr } from 'ngx-toastr';
-
-
+import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 bootstrapApplication(AppComponent, {
 
   ...appConfig,
@@ -24,7 +25,10 @@ bootstrapApplication(AppComponent, {
       preventDuplicates: true, // Prevent duplicate toasts
     }),
     provideRouter(routes),
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), // ✅ Correct Firebase init
-    provideFirestore(() => getFirestore()) // ✅ Correct Firestore provider
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), 
+    provideFirestore(() => getFirestore()) ,
+    provideStorage(() => getStorage()),
+    HttpClient,
+    HttpClientModule
   ]
 }).catch((err) => console.error(err));
