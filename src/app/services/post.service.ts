@@ -4,6 +4,7 @@ import { Firestore,collection, addDoc, collectionSnapshots, updateDoc,doc, delet
 import { ToastrService } from 'ngx-toastr';
 import {map} from 'rxjs/operators';
 import { Router } from '@angular/router';
+
 @Injectable({
   providedIn: 'root'
 })

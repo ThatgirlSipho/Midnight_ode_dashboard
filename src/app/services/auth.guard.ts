@@ -7,16 +7,14 @@ export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService); // Inject AuthService
   const toastr = inject(ToastrService);
   const router=inject(Router);
-  // Check if the user is logged in via the AuthService
- if (authService.isLoggedInGaurd){
- 
-  return true;
+  
+  const user = localStorage.getItem('user');
 
- }
- else{
-  toastr.error('Please login', 'Error');
-  router.navigate(['/'])
-  return false
-
- }
+  if (user) {
+    return true;
+  } else {
+    toastr.error('Please login', 'Error');
+    router.navigate(['/']);
+    return false;
+  }
 };

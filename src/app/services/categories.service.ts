@@ -26,7 +26,7 @@ export class CategoriesService {
     }
 
     
-      // ✅ Corrected loadData() method using collectionData()
+     
       loadData() {
         const categoriesCollection = collection(this.afs, 'categories');
     
